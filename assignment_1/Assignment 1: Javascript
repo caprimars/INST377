@@ -1,0 +1,361 @@
+<html>
+<head>
+<!-- CSS -->
+<style type="text/css">
+  body {
+     background-color: #eee;
+    }
+
+    #answers_table{
+        width: 3000px;
+        height: 185px;
+        padding: 0 17px;
+        margin: 0 17px;
+        white-space: nowrap;
+        border: 1px solid blue;
+    }
+
+    table{
+        width: 100%;
+        height: 380px;
+        margin: auto auto;
+        white-space: nowrap;
+		overflow-y:hidden;
+
+    }
+
+    tr {
+        position: relative;
+        width: auto;
+        height: auto;
+        padding: 0 17px;
+        margin: 0 -17px;
+        clear: both;
+    }
+    tr:hover td {
+        background-color: #eee;
+        color: white;
+        border: 1px solid white;
+    }
+    th{
+        border: 1px solid #999;
+        display: inline-block;
+        background-color: #6B7A8F;
+        vertical-align: middle;
+        text-align: left;
+        width: 10%;
+        height: 15px;
+        /* height: 100%; */
+        padding: 1px;
+		font-family: courier;
+        font-size: 80%
+		font-weight: bold;
+		color: #FFF;
+    }
+
+    td {
+        border: 1px solid #fff;
+        vertical-align: middle;
+        text-align: left;
+        display: inline-block;
+        width: 10%;
+        height: 15px;
+        /* height: 100%; */
+        padding: 1px;
+        background-color: white;
+		font-family: verdana;
+        font-size: 80%
+	}
+    .even-row {
+        background-color: #E9E9E9 ;
+    }
+</style>
+
+<!-- Data -->
+<script>
+
+// Don't copy this to any other places in this file. You can just use the "organizations" variable to do your assignment.
+var organizations = [
+	 {
+        "Region": "East Asia & Pacific",
+        "Country": "New Zealand",
+        "Country Income Level": "High income",
+        "Organization Name": "200 Square",
+        "Organization Type": "For-profit",
+        "Sectors": "Housing, construction & real estate",
+        "Description": "200 Square is an online real estate agent in New Zealand.",
+        "City": "Wellington",
+        "State/Region": "Wellington",
+        "Founding Year": 2010,
+        "Size": "1 to 10",
+        "Type of Data Used": "Housing, Education",
+        "profileID": "731"
+    },
+    {
+        "Region": "Europe & Central Asia",
+        "Country": "United Kingdom",
+        "Country Income Level": "High income",
+        "Organization Name": "21c Consultancy",
+        "Organization Type": "For-profit",
+        "Sectors": "IT and geospatial",
+        "Description": "21c is ICT innovation consultancy which advises international actors, institutions and governments around the world on technological trends which can affect the way they deliver services.",
+        "City": "London",
+        "State/Region": "",
+        "Founding Year": 2015,
+        "Size": "1 to 10",
+        "Type of Data Used": "",
+        "profileID": "1694"
+    },
+    {
+        "Region": "Europe & Central Asia",
+        "Country": "Russian Federation",
+        "Country Income Level": "High income",
+        "Organization Name": "2GIS",
+        "Organization Type": "For-profit",
+        "Sectors": "IT and geospatial",
+        "Description": "2GIS is a city information service combined with a map. ",
+        "City": "Novosibirsk",
+        "State/Region": "Novosibirsk Oblast",
+        "Founding Year": 1999,
+        "Size": "1000+",
+        "Type of Data Used": "Transportation, Geospatial, Business",
+        "profileID": "1025"
+    },
+    {
+        "Region": "North America",
+        "Country": "United States",
+        "Country Income Level": "High income",
+        "Organization Name": "2nd City Zoning",
+        "Organization Type": "Nonprofit",
+        "Sectors": "Housing, construction & real estate",
+        "Description": "An Open City App, 2nd City Zoning is an interactive map that lets you find out how your building is zoned, learn where to locate your business and explore zoning patterns throughout the city.",
+        "City": "Chicago",
+        "State/Region": "Illinois",
+        "Founding Year": 2013,
+        "Size": "1 to 10",
+        "Type of Data Used": "Housing",
+        "profileID": "1693"
+    },
+    {
+        "Region": "North America",
+        "Country": "United States",
+        "Country Income Level": "High income",
+        "Organization Name": "3 Round Stones Inc",
+        "Organization Type": "For-profit",
+        "Sectors": "IT and geospatial",
+        "Description": "3 Round Stones' Open Source platform is used by the Fortune 2000 and US Government Agencies to clect, publish and reuse data, both public and proprietary.",
+        "City": "Arlington",
+        "State/Region": "Virginia",
+        "Founding Year": 2010,
+        "Size": "1 to 10",
+        "Type of Data Used": "Weather, Science and research, Health/healthcare, Geospatial, Environment, Energy, Demographic and social, Business",
+        "profileID": "580"
+    },
+    {
+        "Region": "North America",
+        "Country": "United States",
+        "Country Income Level": "High income",
+        "Organization Name": "360 Yield Center",
+        "Organization Type": "For-profit",
+        "Sectors": "Agriculture",
+        "Description": "Taking a 360-degree view of key yield-limiting variables, 360 Yield Center develops strategies for better-performing crops and better on-farm profits.",
+        "City": "Morton",
+        "State/Region": "Illinois",
+        "Founding Year": 2014,
+        "Size": "51 to 200",
+        "Type of Data Used": "Agriculture, Environment, Weather",
+        "profileID": "1692"
+    },
+    {
+        "Region": "Europe & Central Asia",
+        "Country": "Denmark",
+        "Country Income Level": "High income",
+        "Organization Name": "3Strikes - City Stories",
+        "Organization Type": "For-profit",
+        "Sectors": "Arts, culture and tourism",
+        "Description": "City Stories provides a platform that allows users to explore local stories and simultaneously contribute their own.",
+        "City": "Aarhus",
+        "State/Region": "Central Denmark Region",
+        "Founding Year": 2015,
+        "Size": "1 to 10",
+        "Type of Data Used": "Arts and culture",
+        "profileID": "2278"
+    },
+    {
+        "Region": "Europe & Central Asia",
+        "Country": "Finland",
+        "Country Income Level": "High income",
+        "Organization Name": "3Tier (Europe) ",
+        "Organization Type": "For-profit",
+        "Sectors": "Energy and climate",
+        "Description": "3TIER is a global environmental and industrial measurement company providing weather-driven renewable energy risk assessment and forecasting for wind, solar, and hydro power projects.",
+        "City": "Helsinki",
+        "State/Region": "Uusimaa",
+        "Founding Year": 2012,
+        "Size": "11 to 50",
+        "Type of Data Used": "Other, Environment",
+        "profileID": "952"
+    },
+    {
+        "Region": "North America",
+        "Country": "United States",
+        "Country Income Level": "High income",
+        "Organization Name": "5PSolutions",
+        "Organization Type": "For-profit",
+        "Sectors": "IT and geospatial",
+        "Description": "5PSolutions are artisans of mobile platforms.",
+        "City": "Fairfax",
+        "State/Region": "Virginia",
+        "Founding Year": 2007,
+        "Size": "1 to 10",
+        "Type of Data Used": "Environment",
+        "profileID": "534"
+    },
+    {
+        "Region": "North America",
+        "Country": "United States",
+        "Country Income Level": "High income",
+        "Organization Name": "AAA National",
+        "Organization Type": "Other",
+        "Sectors": "Transportation and logistics",
+        "Description": "AAA provides services such as travel, automotive, insurance, financial, and discounts.",
+        "City": "Irving",
+        "State/Region": "Texas",
+        "Founding Year": 1902,
+        "Size": "201 to 1000",
+        "Type of Data Used": "Transportation",
+        "profileID": "1691"
+    },
+    {
+        "Region": "North America",
+        "Country": "United States",
+        "Country Income Level": "High income",
+        "Organization Name": "AAASHTO",
+        "Organization Type": "Other",
+        "Sectors": "Transportation and logistics",
+        "Description": "AASHTO works to educate the public and key decision makers about the critical role that transportation plays in securing a good quality of life and sound economy. AASHTO serves as a liaison between state departments of transportation and the Federal government.",
+        "City": "Washington",
+        "State/Region": "DC",
+        "Founding Year": 1913,
+        "Size": "51 to 200",
+        "Type of Data Used": "Transportation",
+        "profileID": "1690"
+    },
+    {
+        "Region": "Latin America & Caribbean",
+        "Country": "Chile",
+        "Country Income Level": "High income",
+        "Organization Name": "ABRELATAM",
+        "Organization Type": "Nonprofit",
+        "Sectors": "Governance",
+        "Description": "ABRELATAM is an conference that seeks to accelerate the process of opening information through Open Data transparency and promote the Latin America.",
+        "City": "Santiago",
+        "State/Region": "",
+        "Founding Year": 2015,
+        "Size": "",
+        "Type of Data Used": "",
+        "profileID": "1687"
+    }
+
+];
+</script>
+
+</head>
+
+<body>
+<!-- Feel free to add empty tags. Data shouldn't be here. -->
+	<div id="org_table"></div>
+    <div id="org_statistics"></div>
+
+<script>
+
+// Your JavaScript code goes here
+function create_table(){
+    var t = document.createElement("table");
+    t.setAttribute("id", "org_tbl")
+    create_header(t);
+    for (i=0; i<organizations.length; i++){
+        var r = document.createElement("tr");
+        r.setAttribute("class", "contents")
+        r.setAttribute("style", "");
+        for (var prop in organizations[i]){
+            var c = document.createElement('td');
+            c.innerHTML = organizations[i][prop];
+            r.appendChild(c);
+        }
+    t.appendChild(r);
+    }
+    org_table.appendChild(t);
+}
+
+function create_header(t){
+    org_keys = Object.keys(organizations[0]);
+    var h = document.createElement("tr");
+    h.setAttribute("id","table_header");
+    h.setAttribute("class","header");
+    for (var index in org_keys){
+        var c = document.createElement("th");
+        c.innerHTML = org_keys[index];
+        h.appendChild(c);
+    }
+    t.appendChild(h);
+}
+
+
+function report_table(){
+    var status = ["The number of Non profit organization:", "The number of oraganization that was found in 10 years:", "The number of North America organization:", "The number of organization that used Transportation type :", "The number of organization that used Housing type:"];
+    var s_t = document.createElement("table");
+    s_t.setAttribute("id","answers_table")
+    for (i=0; i<5; i++){
+        var s_r = document.createElement("tr");
+        for (j=0; j<2; j++){
+            var s_c = document.createElement("td");
+            if (j==0){
+                s_c.innerHTML = status[i];
+            }
+            s_r.appendChild(s_c);
+        }
+        s_t.appendChild(s_r);
+    }
+    document.getElementById("org_statistics").appendChild(s_t);
+    report_calculation();
+}
+
+function report_calculation(){
+    num_NonProfit_org = 0;
+    num_org_less_10year = 0;
+    num_org_NA = 0;
+    num_org_Transportation = 0;
+    num_org_Housing = 0;
+    table_length = document.getElementById("org_tbl").rows.length;
+    org_year = parseInt(document.getElementById("org_tbl").rows[i].cells[9].innerHTML);
+    for (i=0; i<table_length; i++){
+        if (document.getElementById("org_tbl").rows[i].cells[4].innerHTML == "Nonprofit"){
+            num_NonProfit_org++;
+        }
+        if( 2018 - org_year < 11 ){
+            num_org_less_10year++;
+        }
+        if(document.getElementById("org_tbl").rows[i].cells[0].innerHTML == "North America"){
+            num_org_NA++;
+        }
+        if(document.getElementById("org_tbl").rows[i].cells[5].innerHTML.includes("Transportation")){
+            num_org_Transportation++;
+        }
+        if(document.getElementById("org_tbl").rows[i].cells[11].innerHTML.includes("Housing")){
+            num_org_Housing++;
+        }
+    }
+    document.getElementById("answers_table").rows[0].cells[1].innerHTML = num_NonProfit_org;
+    document.getElementById("answers_table").rows[1].cells[1].innerHTML = num_org_less_10year;
+    document.getElementById("answers_table").rows[2].cells[1].innerHTML = num_org_NA;
+    document.getElementById("answers_table").rows[3].cells[1].innerHTML = num_org_Transportation;
+    document.getElementById("answers_table").rows[4].cells[1].innerHTML = num_org_Housing;
+}
+
+create_table();
+report_table();
+
+</script>
+</body>
+</html>
