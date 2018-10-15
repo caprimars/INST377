@@ -2,22 +2,25 @@
 <head>
 <!-- CSS -->
 <style type="text/css">
-  body {
+	div {
+		margin-bottom: 20px;
+	}
+	body {
      background-color: #eee;
     }
 
-    #answers_table{
-        width: 3000px;
-        height: 185px;
-        padding: 0 17px;
-        margin: 0 17px;
-        white-space: nowrap;
-        border: 1px solid blue;
-    }
+#mytable{
+		width: 1800px;
+		height: 185px;
+		padding: 0 21px;
+		margin: 0 21px;
+		white-space: nowrap;
+		border: 2px solid blue;
+}
 
     table{
         width: 100%;
-        height: 380px;
+        height: 370px;
         margin: auto auto;
         white-space: nowrap;
 		overflow-y:hidden;
@@ -28,22 +31,22 @@
         position: relative;
         width: auto;
         height: auto;
-        padding: 0 17px;
-        margin: 0 -17px;
+        padding: 0 21px;
+        margin: 0 -21px;
         clear: both;
     }
     tr:hover td {
         background-color: #eee;
         color: white;
-        border: 1px solid white;
+        border: 2px solid white;
     }
     th{
-        border: 1px solid #999;
+        border: 2px solid #999;
         display: inline-block;
         background-color: #6B7A8F;
         vertical-align: middle;
         text-align: left;
-        width: 10%;
+        width: 25%;
         height: 15px;
         /* height: 100%; */
         padding: 1px;
@@ -54,11 +57,11 @@
     }
 
     td {
-        border: 1px solid #fff;
+        border: 2px solid #fff;
         vertical-align: middle;
         text-align: left;
         display: inline-block;
-        width: 10%;
+        width: 25%;
         height: 15px;
         /* height: 100%; */
         padding: 1px;
@@ -69,11 +72,28 @@
     .even-row {
         background-color: #E9E9E9 ;
     }
+
 </style>
+
+<table id="mytable">
+  <tr>
+    <th>Non profit organization</th>r
+    <th>Less than 10 years old</th>
+    <th>In North American</th>
+		<th>Used the Transportation type of data</th>
+		<th>Founding Year before 2000</th>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>13</td>
+    <td>6</td>
+		<td>2</td>
+		<td>3</td>
+  </tr>
+</table>
 
 <!-- Data -->
 <script>
-
 // Don't copy this to any other places in this file. You can just use the "organizations" variable to do your assignment.
 var organizations = [
 	 {
@@ -143,7 +163,7 @@ var organizations = [
         "Organization Name": "3 Round Stones Inc",
         "Organization Type": "For-profit",
         "Sectors": "IT and geospatial",
-        "Description": "3 Round Stones' Open Source platform is used by the Fortune 2000 and US Government Agencies to clect, publish and reuse data, both public and proprietary.",
+        "Description": "3 Round Stones' Open Source platform is used by the Fortune 2000 and US Government Agencies to collect, publish and reuse data, both public and proprietary.",
         "City": "Arlington",
         "State/Region": "Virginia",
         "Founding Year": 2010,
@@ -265,97 +285,16 @@ var organizations = [
 <body>
 <!-- Feel free to add empty tags. Data shouldn't be here. -->
 	<div id="org_table"></div>
-    <div id="org_statistics"></div>
 
 <script>
+// outputs the first item of the organizations array. Just for testing.
+console.log(organizations[0]);
 
 // Your JavaScript code goes here
-function create_table(){
-    var t = document.createElement("table");
-    t.setAttribute("id", "org_tbl")
-    create_header(t);
-    for (i=0; i<organizations.length; i++){
-        var r = document.createElement("tr");
-        r.setAttribute("class", "contents")
-        r.setAttribute("style", "");
-        for (var prop in organizations[i]){
-            var c = document.createElement('td');
-            c.innerHTML = organizations[i][prop];
-            r.appendChild(c);
-        }
-    t.appendChild(r);
-    }
-    org_table.appendChild(t);
-}
-
-function create_header(t){
-    org_keys = Object.keys(organizations[0]);
-    var h = document.createElement("tr");
-    h.setAttribute("id","table_header");
-    h.setAttribute("class","header");
-    for (var index in org_keys){
-        var c = document.createElement("th");
-        c.innerHTML = org_keys[index];
-        h.appendChild(c);
-    }
-    t.appendChild(h);
-}
-
-
-function report_table(){
-    var status = ["The number of Non profit organization:", "The number of oraganization that was found in 10 years:", "The number of North America organization:", "The number of organization that used Transportation type :", "The number of organization that used Housing type:"];
-    var s_t = document.createElement("table");
-    s_t.setAttribute("id","answers_table")
-    for (i=0; i<5; i++){
-        var s_r = document.createElement("tr");
-        for (j=0; j<2; j++){
-            var s_c = document.createElement("td");
-            if (j==0){
-                s_c.innerHTML = status[i];
-            }
-            s_r.appendChild(s_c);
-        }
-        s_t.appendChild(s_r);
-    }
-    document.getElementById("org_statistics").appendChild(s_t);
-    report_calculation();
-}
-
-function report_calculation(){
-    num_NonProfit_org = 0;
-    num_org_less_10year = 0;
-    num_org_NA = 0;
-    num_org_Transportation = 0;
-    num_org_Housing = 0;
-    table_length = document.getElementById("org_tbl").rows.length;
-    org_year = parseInt(document.getElementById("org_tbl").rows[i].cells[9].innerHTML);
-    for (i=0; i<table_length; i++){
-        if (document.getElementById("org_tbl").rows[i].cells[4].innerHTML == "Nonprofit"){
-            num_NonProfit_org++;
-        }
-        if( 2018 - org_year < 11 ){
-            num_org_less_10year++;
-        }
-        if(document.getElementById("org_tbl").rows[i].cells[0].innerHTML == "North America"){
-            num_org_NA++;
-        }
-        if(document.getElementById("org_tbl").rows[i].cells[5].innerHTML.includes("Transportation")){
-            num_org_Transportation++;
-        }
-        if(document.getElementById("org_tbl").rows[i].cells[11].innerHTML.includes("Housing")){
-            num_org_Housing++;
-        }
-    }
-    document.getElementById("answers_table").rows[0].cells[1].innerHTML = num_NonProfit_org;
-    document.getElementById("answers_table").rows[1].cells[1].innerHTML = num_org_less_10year;
-    document.getElementById("answers_table").rows[2].cells[1].innerHTML = num_org_NA;
-    document.getElementById("answers_table").rows[3].cells[1].innerHTML = num_org_Transportation;
-    document.getElementById("answers_table").rows[4].cells[1].innerHTML = num_org_Housing;
-}
-
-create_table();
-report_table();
+document.appendChild(mytable)
 
 </script>
+
 </body>
 </html>
+
